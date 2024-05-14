@@ -1,0 +1,91 @@
+from flask import Flask, render_template, request, redirect, url_for
+from flask_mysqldb import MySQL
+
+
+app = Flask(__name__)
+
+# Configuração do MySQL
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'fatec'
+app.config['MYSQL_DB'] = 'MBViajens'
+mysql = MySQL(app)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/contatos')
+def contatos():
+    return render_template('contatos.html')
+
+
+@app.route('/serviços')
+def serviços():
+    #cur = mysql.connection.cursor()
+    #cur.execute("SELECT * FROM contato")
+    #contato = cur.fetchall()
+    #cur.close()
+    return render_template('serviços.html') #,contato=contato)
+
+# Adicionar contato
+@app.route('/add', methods=['POST'])
+def add_contato():
+    if request.method == 'POST':
+        #return f"Done!!"
+        ir_de= request.form['ir_de']
+        ir_para = request.form['ir_para']
+        data_ida = request.form['data_ida']
+        data_volta = request.form['data_volta']
+        descrição = request.form['descrição']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO contato (ir_de, ir_para, data_ida, data_volta, descrição) VALUES (%s, %s, %s, %s, %s)", (ir_de, ir_para, data_ida, data_volta, descrição))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('contatos'))
+    
+# atualizar contato
+@app.route('/update/<int:contato_id>', methods=['POST'])
+def update_contato(contato_id):
+    if request.method == 'POST':
+        ir_de= request.form['ir_de']
+        ir_para = request.form['ir_para']
+        data_ida = request.form['data_ida']
+        data_volta = request.form['data_volta']
+        descrição = request.form['descrição']
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE contato SET ir_de=%s, ir_para=%s, data_ida=%s, data_volta=%s, descrição=%s WHERE id=%s", (ir_de, ir_para, data_ida, data_volta, descrição))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('contatos'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+BANCO DE DADOS
+
+create database MBViajens;
+use MBViajens;
+
+create table contato (
+    id int auto_increment primary key,
+    ir_de varchar(255) not null,
+    ir_para varchar(255) not null,
+    data_ida date,
+    data_volta date,
+    descrição varchar(255) not null
+);
+
+
+ARQUIVO html
+
+<form action="/add" method="POST">
+              <input type="text" class="form-control" placeholder="Ir de" name="ir_de"><br>
+              <input type="text" class="form-control" placeholder="Para" name="ir_para"><br>
+              <input type="date" class="form-control" placeholder="Data ida" name="data_ida"><br>
+              <input type="date" class="form-control" placeholder="Data volta" name="data_volta"><br>
+              <textarea class="form-control" rows="5" name="text" placeholder="Escreva mais detalhes..." name="descrição"></textarea>
+              <button type="submit" value="Enviar" class="submit" required>Enviar</button>
+            </form>
