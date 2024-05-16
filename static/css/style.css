@@ -270,6 +270,16 @@
 /* Section Gallary End */
 
 
+/* contatos */
+
+.roteiro {
+    background-color: #0099ff;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    margin-right: 10px;
+    float: left; /* Para colocar os quadrados um ao lado do outro */
+}
 
 
 /* About Start */
