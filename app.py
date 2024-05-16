@@ -16,18 +16,18 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html')
 
-@app.route('/contatos')
-def contatos():
-    return render_template('contatos.html')
-
 
 @app.route('/serviços')
 def serviços():
-    #cur = mysql.connection.cursor()
-    #cur.execute("SELECT * FROM contato")
-    #contato = cur.fetchall()
-    #cur.close()
-    return render_template('serviços.html') #,contato=contato)
+    return render_template('serviços.html')
+
+@app.route('/contatos')
+def contatos():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM contato")
+    contato = cur.fetchall()
+    cur.close()
+    return render_template('contatos.html',contato=contato)
 
 # Adicionar contato
 @app.route('/add', methods=['POST'])

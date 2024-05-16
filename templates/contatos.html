@@ -7,7 +7,7 @@
       <div class="container">
 
         <div class="main-text">
-          <h1><span>C</span>ontatos</h1>
+          <h1><span>V</span>iagens</h1>
         </div>
         
         <div class="row">
@@ -30,6 +30,17 @@
           </div>
 
         </div>
+
+        <div class="main-txt">
+          <h1><span>R</span>oteiros</h1>
+        </div>
+        <div> 
+          {% for contato in contato %}
+          <li class="roteiro">{{contato[1]}} {{contato[2]}} {{contato[3]}} {{contato[4]}} {{contato[5]}} </li>
+        {% endfor %}
+        </div>
+        
+
       </div>
     </section>
     <!-- CONTATOS FIM -->
