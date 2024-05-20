@@ -34,7 +34,7 @@ def contatos():
 @app.route('/add', methods=['POST'])
 def add_contato():
     if request.method == 'POST':
-        ir_de= request.form['ir_de']
+        ir_de = request.form['ir_de']
         ir_para = request.form['ir_para']
         data_ida = request.form['data_ida']
         data_volta = request.form['data_volta']
