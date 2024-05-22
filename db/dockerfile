@@ -1,0 +1,9 @@
+# Use uma imagem base do MySQL
+FROM mysql:5.7
+
+# Defina as variáveis de ambiente do MySQL
+ENV MYSQL_DATABASE=mydatabase
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+
+# Exponha a porta que o MySQL irá rodar
+EXPOSE 3306
