@@ -1,5 +1,6 @@
-create database MBViajens;
-use MBViajens;
+create database if not exists mbviagens;
+
+use mbviajens;
 
 create table contato (
     id int auto_increment primary key,
